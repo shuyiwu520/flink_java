@@ -34,7 +34,7 @@ public class FlinkGetDataFromKafka {
         // 转换成SensorReading类型
         DataStream<String> dataStream = inputStream.map(line -> {
             String[] fields = line.split(",");
-            return new SensorReading(fields[0], new Long(fields[1]), new Double(fields[2])).toString();
+            return new SensorReading(fields[0], new Long(Long.parseLong(fields[1])), new Double(fields[2])).toString();
         });
 
         dataStream.addSink( new FlinkKafkaProducer011<String>("localhost:9092", "wuu", new SimpleStringSchema()));
